@@ -25,6 +25,15 @@ const App = {
                 App.navigateTo(target);
             });
         });
+
+        // Hamburger Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinksContainer = document.querySelector('.nav-links');
+        if (mobileMenuBtn && navLinksContainer) {
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinksContainer.classList.toggle('nav-active');
+            });
+        }
         
         // Handle action cards on home view
         const actionCards = document.querySelectorAll('.action-card');
@@ -147,6 +156,12 @@ const App = {
         if (baseViewId === 'browser' && window.UI) {
             window.UI.renderBrowserFilters();
             window.UI.renderVocabList();
+        }
+
+        // Auto-close mobile menu on navigation
+        const navLinksContainer = document.querySelector('.nav-links');
+        if (navLinksContainer) {
+            navLinksContainer.classList.remove('nav-active');
         }
     }
 };
