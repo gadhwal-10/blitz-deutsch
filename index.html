@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blitz Deutsch</title>
+    <meta name="description" content="Minimalistic German vocabulary learning app">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <!-- Custom Confirm Modal -->
+    <div id="custom-confirm" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; display:flex; justify-content:center; align-items:center;">
+        <div style="background:var(--card-bg); padding:32px; border-radius:24px; max-width:400px; text-align:center; box-shadow: var(--shadow-lg);">
+            <h3 style="margin-top:0; color:var(--text-color);">Quit Test?</h3>
+            <p style="color:#aaa;">Are you sure you want to quit the test? Your progress will be lost.</p>
+            <div style="display:flex; gap:16px; justify-content:center; margin-top:24px;">
+                <button id="custom-confirm-cancel" class="btn btn-secondary" style="padding:8px 24px;">Cancel</button>
+                <button id="custom-confirm-ok" class="btn btn-primary" style="padding:8px 24px; background-color:#e74c3c;">Quit Test</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="app-nav">
+        <div class="nav-brand">Blitz<span>Deutsch</span></div>
+        <div class="nav-links">
+            <button class="nav-btn active" data-target="home">Home</button>
+            <button class="nav-btn" data-target="browser">Learn Vocab</button>
+            <button class="nav-btn" data-target="flashcards">Flashcards</button>
+            <button class="nav-btn" data-target="wotd">Word of Day</button>
+            <button class="nav-btn" data-target="test">Test</button>
+        </div>
+    </nav>
+
+    <main id="app-content">
+        <!-- Views will be injected or toggled here -->
+
+        <!-- Home View -->
+        <section id="view-home" class="view active">
+            <header class="view-header">
+                <h1>Willkommen!</h1>
+                <p>Master German vocabulary with speed and precision.</p>
+            </header>
+            <div class="dashboard-grid">
+                <div class="card action-card" data-link="browser">
+                    <h2>📚 Browse Vocabulary</h2>
+                    <p>Explore words by level and chapter.</p>
+                </div>
+                <div class="card action-card" data-link="flashcards">
+                    <h2>🗂️ Flashcards</h2>
+                    <p>Practice with spaced repetition.</p>
+                </div>
+                <div class="card action-card" data-link="wotd">
+                    <h2>🌟 Word of the Day</h2>
+                    <p>Learn something new today.</p>
+                </div>
+                <div class="card action-card" data-link="test">
+                    <h2>📝 Take a Test</h2>
+                    <p>Challenge your knowledge.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browser View -->
+        <section id="view-browser" class="view hidden">
+            <header class="view-header">
+                <h1>Vocabulary Browser</h1>
+                <div class="filters" style="display:flex; gap:16px; margin-top:16px; margin-bottom:16px;">
+                    <select id="browser-level-select">
+                        <option value="">All Levels</option>
+                    </select>
+                    <select id="browser-chapter-select" disabled>
+                        <option value="">All Chapters</option>
+                    </select>
+                </div>
+            </header>
+            <div id="browser-list" class="vocab-list"></div>
+        </section>
+
+        <!-- Flashcards View -->
+        <section id="view-flashcards" class="view hidden">
+            <header class="view-header">
+                <h1>Flashcards</h1>
+                <div id="flashcard-setup" class="setup-panel"
+                    style="display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; margin-bottom:24px;">
+                    <select id="flashcard-level-select">
+                        <option value="A1">A1</option>
+                    </select>
+                    <select id="flashcard-chapter-select">
+                        <option value="">All Chapters</option>
+                    </select>
+                    <button id="start-flashcards-btn" class="btn btn-primary">Start Practice</button>
+                </div>
+            </header>
+            <div id="flashcard-container" class="hidden">
+                <div class="progress-bar-container">
+                    <div id="flashcard-progress" class="progress-bar"></div>
+                </div>
+                <div class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h2 id="fc-german" class="fc-word giant-text">Word</h2>
+                            <p id="fc-article" class="fc-meta large-text text-muted">der</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <h2 id="fc-english" class="fc-word large-text">Translation</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="flashcard-controls mt-4" style="display:flex; justify-content:center; gap: 10px;">
+                    <button id="fc-quit" class="btn btn-secondary"
+                        style="background-color: var(--error-color);">Quit</button>
+                    <button id="fc-prev" class="btn btn-secondary">Prev</button>
+                    <button id="fc-flip" class="btn btn-primary">Flip</button>
+                    <button id="fc-next" class="btn btn-secondary">Next</button>
+                </div>
+            </div>
+            <div id="flashcard-summary" class="hidden">
+                <h2>Practice Complete!</h2>
+                <p>You reviewed <span id="fc-total-reviewed">0</span> words.</p>
+                <button id="fc-restart-btn" class="btn btn-primary mt-4">Practice Again</button>
+            </div>
+        </section>
+
+        <!-- Word of the Day View -->
+        <section id="view-wotd" class="view hidden">
+            <header class="view-header">
+                <h1>Word of the Day</h1>
+            </header>
+            <div class="wotd-card card" style="text-align:center; max-width:600px; margin: 40px auto; padding: 40px;">
+                <span class="level-badge" id="wotd-level"
+                    style="background:var(--border-color); color:var(--text-color); padding:6px 16px; font-weight:800; border-radius:20px;">A1</span>
+                <h2 id="wotd-german" class="giant-text" style="margin-top:16px;">Wort</h2>
+                <p id="wotd-article" class="meta-text text-muted" style="margin-bottom:16px; font-size:24px;">das</p>
+                <h3 id="wotd-english" class="large-text">Word</h3>
+                <div class="wotd-actions" style="margin-top:32px; display:flex; justify-content:center; gap:16px;">
+                    <button id="wotd-listen" class="btn btn-secondary">🔊 Listen</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test View -->
+        <section id="view-test" class="view hidden">
+            <header class="view-header">
+                <h1>Vocabulary Test</h1>
+                <div id="test-setup" class="setup-panel"
+                    style="display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; margin-bottom:24px;">
+                    <select id="test-level-select">
+                        <option value="A1">A1</option>
+                    </select>
+                    <button id="start-test-btn" class="btn btn-primary">Start Test</button>
+                </div>
+            </header>
+            <div id="test-container" class="card hidden text-center">
+                <div class="progress-container mb-2">
+                    <div class="progress-bar" id="test-progress" style="width: 0%"></div>
+                </div>
+                <h3 id="test-question-number" class="text-sm text-muted mb-1"
+                    style="font-weight: normal; margin-top: -10px;">Question 1</h3>
+                <div class="test-question-area" style="margin-top: 40px; margin-bottom: 40px;">
+                    <h2 id="test-question" class="giant-text">Word</h2>
+                    <p class="text-muted mt-2">Translate to German</p>
+                    <p class="text-warning mt-2" style="font-size: 0.9em; color: #f39c12; margin-top: 8px;">⚠️ Remember
+                        to include the article (der/die/das) for nouns!</p>
+                    <input type="text" id="test-input" placeholder="Type your answer..." autocomplete="off"
+                        style="margin-top:24px;">
+                    <div id="test-feedback" class="mt-4" style="min-height: 32px; font-weight:bold;"></div>
+                </div>
+                <div class="test-controls mt-4" style="display:flex; justify-content:center; gap: 10px;">
+                    <button id="test-quit" class="btn btn-secondary"
+                        style="background-color: var(--error-color);">Quit</button>
+                    <button id="test-submit-test" class="btn btn-secondary"
+                        style="background-color: #f39c12; color: #fff; border-color: #f39c12;">Submit Test</button>
+                    <button id="test-next" class="btn btn-secondary">Next / Skip</button>
+                    <button id="test-submit" class="btn btn-primary">Check</button>
+                </div>
+            </div>
+            <div id="test-results" class="hidden" style="text-align:center;">
+                <h2>Test Complete</h2>
+                <div class="score-display">
+                    <span id="test-final-score" class="giant-score">0</span> / <span id="test-total-questions">10</span>
+                </div>
+                <button id="test-home-btn" class="btn btn-primary mt-4">Back to Home</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>Made with 💙 by Aryan Gadhwal</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="data/vocab.js"></script>
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/flashcards.js"></script>
+    <script src="assets/js/test.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
