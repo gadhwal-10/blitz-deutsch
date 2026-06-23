@@ -269,6 +269,92 @@ h3 { font-size: 20px; font-weight: 600; }
 .vocab-actions { display: flex; gap: 8px; }
 .listen-de-btn, .listen-en-btn { padding: 8px; min-height: 40px; }
 
+/* Vocab Player UI */
+#vocab-player-container {
+    background: linear-gradient(135deg, #2a1114, #111827);
+    border-radius: var(--border-radius);
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+    margin-top: 24px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+.vocab-player-badge {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 6px 16px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 32px;
+}
+.vocab-player-german {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    word-break: break-word;
+}
+.vocab-player-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    width: 60px;
+    margin: 0 auto 16px auto;
+}
+.vocab-player-means {
+    font-size: 16px;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 16px;
+}
+.vocab-player-english {
+    font-size: 32px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 48px;
+}
+.vocab-player-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    background: rgba(0,0,0,0.3);
+    padding: 24px;
+    border-radius: 40px;
+    width: max-content;
+    margin: 0 auto;
+}
+.vp-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+.vp-btn:hover {
+    background: rgba(255,255,255,0.1);
+    transform: scale(1.05);
+}
+.vp-btn-play {
+    width: 72px;
+    height: 72px;
+    background: rgba(230, 57, 70, 0.2); /* Deep red tint */
+    border-color: rgba(230, 57, 70, 0.5);
+}
+.vp-btn-play:hover {
+    background: rgba(230, 57, 70, 0.4);
+}
+
 .vocab-info h3 {
     text-transform: none;
     letter-spacing: normal;
