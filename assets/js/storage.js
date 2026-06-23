@@ -68,6 +68,17 @@ const Storage = {
         const stats = Storage.getStats();
         stats.sprechenEvaluated += 1;
         Storage.updateStats(stats);
+    },
+    getRecentTestWords: () => {
+        return Storage.getKey('recent_test_words', []);
+    },
+    addRecentTestWords: (words) => {
+        let recent = Storage.getRecentTestWords();
+        // Add new words
+        recent = [...words.map(w => w.german), ...recent];
+        // Keep only the last 100
+        if (recent.length > 100) recent = recent.slice(0, 100);
+        Storage.setKey('recent_test_words', recent);
     }
 };
 window.Storage = Storage;
