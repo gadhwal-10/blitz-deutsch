@@ -30,10 +30,13 @@ const Test = {
         });
         
         document.getElementById('start-test-btn').addEventListener('click', Test.start);
-        document.getElementById('test-submit').addEventListener('click', Test.checkAnswer);
         document.getElementById('test-next').addEventListener('click', () => {
-            Test.showFeedback(false, "Skipped", Test.words[Test.currentIndex].german);
-            setTimeout(() => Test.nextQuestion(), 1000);
+            // If already disabled (waiting for timeout), skip timeout and go next immediately
+            if (document.getElementById('test-input').disabled) {
+                Test.nextQuestion();
+            } else {
+                Test.checkAnswer();
+            }
         });
         document.getElementById('test-quit').addEventListener('click', () => Test.quitTest(true));
         document.getElementById('test-submit-test').addEventListener('click', () => {
@@ -129,7 +132,6 @@ const Test = {
     checkAnswer: () => {
         const inputEl = document.getElementById('test-input');
         const answer = inputEl.value.trim().toLowerCase();
-        if (!answer) return;
         
         inputEl.disabled = true;
         
@@ -141,46 +143,48 @@ const Test = {
         let isCorrect = false;
         let matchedTarget = cleanTarget;
         
-        const checkSynonyms = (cleanStr) => {
-            const parts = cleanStr.split(/[,/]/).map(s => s.trim()).filter(s => s);
-            for (const p of parts) {
-                if (answer === p) return p;
-                const dist = Test.levenshtein(answer, p);
-                if (dist <= 2 && p.length > 4) return p;
-            }
-            return null;
-        };
+        if (answer) {
+            const checkSynonyms = (cleanStr) => {
+                const parts = cleanStr.split(/[,/]/).map(s => s.trim()).filter(s => s);
+                for (const p of parts) {
+                    if (answer === p) return p;
+                    const dist = Test.levenshtein(answer, p);
+                    if (dist <= 2 && p.length > 4) return p;
+                }
+                return null;
+            };
 
-        const match = checkSynonyms(cleanTarget);
-        if (match) {
-            isCorrect = true;
-            matchedTarget = match;
-        }
-        
-        // If not correct against primary target, check for valid synonyms in the whole dictionary
-        if (!isCorrect) {
-            let foundSynonym = false;
-            const baseEnglish = englishPrompt.replace(/\([^)]*\)/g, '').trim();
+            const match = checkSynonyms(cleanTarget);
+            if (match) {
+                isCorrect = true;
+                matchedTarget = match;
+            }
             
-            Data.vocab.forEach(lvl => {
-                lvl.chapters.forEach(chap => {
-                    chap.vocab.forEach(v => {
-                        const synEnglish = v.english.toLowerCase().replace(/\([^)]*\)/g, '').trim();
-                        if (synEnglish === baseEnglish && synEnglish !== "") {
-                            const synTarget = v.german.toLowerCase();
-                            const synCleanTarget = synTarget.replace(/\([^)]*\)/g, '').trim();
-                            
-                            const synMatch = checkSynonyms(synCleanTarget);
-                            if (synMatch) {
-                                foundSynonym = true;
-                                matchedTarget = synMatch;
+            // If not correct against primary target, check for valid synonyms in the whole dictionary
+            if (!isCorrect) {
+                let foundSynonym = false;
+                const baseEnglish = englishPrompt.replace(/\([^)]*\)/g, '').trim();
+                
+                Data.vocab.forEach(lvl => {
+                    lvl.chapters.forEach(chap => {
+                        chap.vocab.forEach(v => {
+                            const synEnglish = v.english.toLowerCase().replace(/\([^)]*\)/g, '').trim();
+                            if (synEnglish === baseEnglish && synEnglish !== "") {
+                                const synTarget = v.german.toLowerCase();
+                                const synCleanTarget = synTarget.replace(/\([^)]*\)/g, '').trim();
+                                
+                                const synMatch = checkSynonyms(synCleanTarget);
+                                if (synMatch) {
+                                    foundSynonym = true;
+                                    matchedTarget = synMatch;
+                                }
                             }
-                        }
+                        });
                     });
                 });
-            });
-            if (foundSynonym) {
-                isCorrect = true;
+                if (foundSynonym) {
+                    isCorrect = true;
+                }
             }
         }
         
@@ -192,7 +196,11 @@ const Test = {
                 Test.showFeedback(true, "Correct!");
             }
         } else {
-            Test.showFeedback(false, "Incorrect.", cleanTarget);
+            if (!answer) {
+                Test.showFeedback(false, "Skipped.", cleanTarget);
+            } else {
+                Test.showFeedback(false, "Incorrect.", cleanTarget);
+            }
         }
         Test.saveState();
         
