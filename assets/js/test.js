@@ -1,8 +1,9 @@
 const Test = {
     words: [],
+    history: [],
     currentIndex: 0,
     score: 0,
-    maxQuestions: 100,
+    maxQuestions: 25,
     
     levenshtein: (a, b) => {
         if(a.length === 0) return b.length;
@@ -62,11 +63,15 @@ const Test = {
             document.getElementById('test-setup').classList.remove('hidden');
         });
         
+        const dlBtn = document.getElementById('test-download-btn');
+        if (dlBtn) dlBtn.addEventListener('click', Test.downloadAnswerKey);
+        
         const session = Storage.getSessionState('test');
         if (session && session.currentIndex < session.words.length) {
             Test.words = session.words;
             Test.currentIndex = session.currentIndex;
             Test.score = session.score;
+            Test.history = session.history || [];
             
             document.getElementById('test-setup').classList.add('hidden');
             document.getElementById('test-container').classList.remove('hidden');
@@ -79,7 +84,8 @@ const Test = {
         Storage.setSessionState('test', {
             words: Test.words,
             currentIndex: Test.currentIndex,
-            score: Test.score
+            score: Test.score,
+            history: Test.history
         });
     },
 
@@ -92,21 +98,36 @@ const Test = {
             return;
         }
         
-        // Fisher-Yates Shuffle for robust randomization
-        for (let i = allWords.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [allWords[i], allWords[j]] = [allWords[j], allWords[i]];
+        // Filter out recently tested words
+        const recentWords = Storage.getRecentTestWords();
+        let availableWords = allWords.filter(w => !recentWords.includes(w.german));
+        
+        // If we don't have enough unseen words, backfill with the oldest recent words
+        if (availableWords.length < Test.maxQuestions) {
+            const needed = Test.maxQuestions - availableWords.length;
+            const fallbackWords = allWords.filter(w => recentWords.includes(w.german));
+            // Prioritize older ones by reversing
+            availableWords = [...availableWords, ...fallbackWords.reverse().slice(0, needed)];
         }
         
-        Test.words = allWords.slice(0, Math.min(Test.maxQuestions, allWords.length));
+        // Fisher-Yates Shuffle
+        for (let i = availableWords.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [availableWords[i], availableWords[j]] = [availableWords[j], availableWords[i]];
+        }
+        
+        Test.words = availableWords.slice(0, Math.min(Test.maxQuestions, availableWords.length));
+        Storage.addRecentTestWords(Test.words);
         
         Test.currentIndex = 0;
         Test.score = 0;
+        Test.history = [];
         
         document.getElementById('test-setup').classList.add('hidden');
         document.getElementById('test-container').classList.remove('hidden');
         
-        document.getElementById('test-total-questions').innerText = Test.words.length;
+        const tTotal = document.getElementById('test-total-questions');
+        if (tTotal) tTotal.innerText = Test.words.length;
         Test.showQuestion();
         Test.saveState();
     },
@@ -202,6 +223,14 @@ const Test = {
                 Test.showFeedback(false, "Incorrect.", cleanTarget);
             }
         }
+        
+        Test.history.push({
+            question: w.english,
+            userAnswer: answer || '(skipped)',
+            correctAnswer: cleanTarget,
+            isCorrect: isCorrect
+        });
+        
         Test.saveState();
         
         setTimeout(() => Test.nextQuestion(), 2000);
@@ -229,6 +258,8 @@ const Test = {
         
         const percent = Math.round((Test.score / Test.words.length) * 100);
         document.getElementById('test-final-score').innerText = Test.score;
+        const totalResultEl = document.getElementById('test-total-questions-result');
+        if(totalResultEl) totalResultEl.innerText = Test.words.length;
         
         Storage.addTestResult(percent);
         
@@ -252,6 +283,39 @@ const Test = {
             document.getElementById('test-setup').classList.remove('hidden');
             if (triggeredByButton) window.location.hash = 'test';
         }
+    },
+    
+    downloadAnswerKey: () => {
+        let text = "Blitz Deutsch - Test Answer Key\n";
+        text += `Score: ${Test.score} / ${Test.words.length}\n`;
+        text += "----------------------------------------\n\n";
+        
+        Test.words.forEach((w, index) => {
+            text += `${index + 1}. Question: ${w.english}\n`;
+            
+            const historyItem = Test.history.find(h => h.question === w.english);
+            
+            if (historyItem) {
+                text += `   Your Answer: ${historyItem.userAnswer}\n`;
+                text += `   Correct Answer: ${historyItem.correctAnswer}\n`;
+                text += `   Result: ${historyItem.isCorrect ? '✅ Correct' : '❌ Incorrect'}\n\n`;
+            } else {
+                const cleanTarget = w.german.replace(/\([^)]*\)/g, '').trim();
+                text += `   Your Answer: (skipped)\n`;
+                text += `   Correct Answer: ${cleanTarget}\n`;
+                text += `   Result: ❌ Skipped\n\n`;
+            }
+        });
+        
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'blitz-deutsch-answer-key.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     }
 };
 window.Test = Test;
