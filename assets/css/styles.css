@@ -83,6 +83,7 @@ h3 { font-size: 20px; font-weight: 600; }
     display: flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
 }
 .nav-brand span {
     color: var(--error-color); /* Soft crimson */
