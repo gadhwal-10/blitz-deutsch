@@ -316,6 +316,9 @@ select, input[type="text"] {
     -webkit-appearance: none;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
 }
+select {
+    padding-right: 40px; /* Ensure space for the custom arrow */
+}
 select:focus, input[type="text"]:focus {
     outline: none;
     border-color: var(--accent-color);
