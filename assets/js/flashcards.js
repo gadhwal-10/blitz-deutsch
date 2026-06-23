@@ -67,14 +67,28 @@ const Flashcards = {
         
         window.location.hash = 'flashcards-practice';
         
-        Flashcards.words = Data.getWords(level, chapter);
-        if (Flashcards.words.length === 0) {
+        const rawWords = Data.getWords(level, chapter);
+        if (rawWords.length === 0) {
             alert('No vocabulary found for selection.');
             return;
         }
         
-        // Shuffle
-        Flashcards.words.sort(() => Math.random() - 0.5);
+        // Shuffle the initial pool
+        rawWords.sort(() => Math.random() - 0.5);
+        
+        // Chunk into blocks of 10, duplicate them to enforce repetition, and shuffle each block
+        const finalDeck = [];
+        const chunkSize = 10;
+        for (let i = 0; i < rawWords.length; i += chunkSize) {
+            let chunk = rawWords.slice(i, i + chunkSize);
+            // Duplicate the chunk so every word appears twice in this small window
+            let doubledChunk = [...chunk, ...chunk];
+            // Shuffle this local window
+            doubledChunk.sort(() => Math.random() - 0.5);
+            finalDeck.push(...doubledChunk);
+        }
+        
+        Flashcards.words = finalDeck;
         
         Flashcards.currentIndex = 0;
         Flashcards.reviewedCount = 0;
