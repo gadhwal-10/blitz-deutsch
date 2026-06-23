@@ -253,24 +253,22 @@ h3 { font-size: 20px; font-weight: 600; }
     margin-top: var(--spacing-unit);
 }
 .vocab-item {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-sm);
+    padding: calc(var(--spacing-unit) * 1.5);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
-    background-color: var(--card-bg);
-    border-radius: var(--border-radius-sm);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    transition: all var(--transition-speed);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-speed);
 }
 .vocab-item:hover {
-    transform: translateX(4px) scale(1.01);
-    box-shadow: var(--shadow-md);
-    border-color: var(--accent-color);
+    transform: translateY(-2px);
 }
-.vocab-info {
-    flex: 1;
-}
+.vocab-info h3 { margin-bottom: 4px; font-size: 18px; font-weight: 700; }
+.vocab-actions { display: flex; gap: 8px; }
+.listen-de-btn, .listen-en-btn { padding: 8px; min-height: 40px; }
+
 .vocab-info h3 {
     text-transform: none;
     letter-spacing: normal;
