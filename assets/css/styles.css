@@ -1,11 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
-    /* Smooth German Theme Palette (Light Mode) */
-    --bg-color: #F8F9FA;
-    /* Soft warm off-white */
-    --text-color: #1F2937;
-    /* Elegant charcoal instead of pure black */
+    /* Smooth German Theme Palette (Dark Mode) */
+    --bg-color: #111827;
+    /* Deep soft blue-black */
+    --text-color: #F9FAFB;
     --accent-color: #FFB703;
     /* Smooth amber/gold */
     --accent-dark: #FB8500;
@@ -14,34 +13,17 @@
     --error-color: #E63946;
     /* Premium crimson red */
     --secondary-color: #9CA3AF;
-    --card-bg: #FFFFFF;
-    --border-color: #E5E7EB;
-    /* Very light subtle border */
-
+    --card-bg: #1F2937;
+    --border-color: #374151;
     --font-sans: 'Nunito', -apple-system, sans-serif;
     --spacing-unit: 16px;
     --border-radius: 20px;
     /* Very soft rounded corners */
     --border-radius-sm: 12px;
     --transition-speed: 0.3s;
-    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        /* Smooth German Theme Palette (Dark Mode) */
-        --bg-color: #111827;
-        /* Deep soft blue-black */
-        --text-color: #F9FAFB;
-        --card-bg: #1F2937;
-        --border-color: #374151;
-        --secondary-color: #9CA3AF;
-        --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.2);
-        --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.3);
-        --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
-    }
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -105,6 +87,14 @@ h3 {
     hyphens: auto;
 }
 
+.giant-text.long-text {
+    font-size: 42px;
+}
+
+.giant-text.very-long-text {
+    font-size: 28px;
+}
+
 .giant-score {
     font-size: 96px;
     font-weight: 800;
@@ -118,6 +108,14 @@ h3 {
     font-weight: 600;
     word-break: break-word;
     hyphens: auto;
+}
+
+.large-text.long-text {
+    font-size: 22px;
+}
+
+.large-text.very-long-text {
+    font-size: 18px;
 }
 
 .text-muted {
@@ -832,6 +830,14 @@ canvas#waveform-canvas {
         font-size: 36px;
     }
 
+    .giant-text.long-text {
+        font-size: 28px;
+    }
+
+    .giant-text.very-long-text {
+        font-size: 22px;
+    }
+
     /* Scaled down for very long words on mobile */
     .giant-score {
         font-size: 56px;
@@ -841,12 +847,17 @@ canvas#waveform-canvas {
         font-size: 24px;
     }
 
-    .flashcard {
-        height: auto;
-        min-height: 350px;
+    .large-text.long-text {
+        font-size: 20px;
     }
 
-    /* Allow height to expand for long text */
+    .large-text.very-long-text {
+        font-size: 16px;
+    }
+
+    .flashcard {
+        height: 350px;
+    }
 }
 
 /* Custom Modal adjustments */
