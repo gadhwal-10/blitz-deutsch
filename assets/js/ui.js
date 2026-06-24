@@ -107,9 +107,18 @@ const UI = {
         }
         
         if (!wotd) return;
+        
+        let article = "";
+        let germanText = wotd.word.german;
+        const articleMatch = germanText.match(/^(der|die|das)\s+(.*)/i);
+        if (articleMatch) {
+            article = articleMatch[1].toLowerCase();
+            germanText = articleMatch[2];
+        }
+
         document.getElementById('wotd-level').innerText = wotd.level;
-        document.getElementById('wotd-german').innerText = wotd.word.german;
-        document.getElementById('wotd-article').innerText = ""; 
+        document.getElementById('wotd-german').innerText = germanText;
+        document.getElementById('wotd-article').innerText = article; 
         document.getElementById('wotd-english').innerText = wotd.word.english;
         
         document.getElementById('wotd-listen').onclick = () => UI.playAudio(wotd.word.german, 'de-DE');
