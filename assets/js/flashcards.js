@@ -111,8 +111,34 @@ const Flashcards = {
         card.classList.remove('flipped');
         
         const w = Flashcards.words[Flashcards.currentIndex];
-        document.getElementById('fc-german').innerText = w.german;
-        document.getElementById('fc-english').innerText = w.english;
+        
+        let article = "";
+        let germanText = w.german;
+        const articleMatch = germanText.match(/^(der|die|das)\s+(.*)/i);
+        if (articleMatch) {
+            article = articleMatch[1].toLowerCase();
+            germanText = articleMatch[2];
+        }
+        
+        const fcGerman = document.getElementById('fc-german');
+        fcGerman.innerText = germanText;
+        fcGerman.classList.remove('long-text', 'very-long-text');
+        if (germanText.length > 30) {
+            fcGerman.classList.add('very-long-text');
+        } else if (germanText.length > 15) {
+            fcGerman.classList.add('long-text');
+        }
+        
+        document.getElementById('fc-article').innerText = article;
+        
+        const fcEnglish = document.getElementById('fc-english');
+        fcEnglish.innerText = w.english;
+        fcEnglish.classList.remove('long-text', 'very-long-text');
+        if (w.english.length > 30) {
+            fcEnglish.classList.add('very-long-text');
+        } else if (w.english.length > 15) {
+            fcEnglish.classList.add('long-text');
+        }
         
         const progress = ((Flashcards.currentIndex) / Flashcards.words.length) * 100;
         document.getElementById('flashcard-progress').style.width = `${progress}%`;
