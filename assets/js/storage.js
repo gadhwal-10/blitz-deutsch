@@ -44,6 +44,9 @@ const Storage = {
         Object.assign(stats, updates);
         Storage.setKey('stats', stats);
     },
+    recordActivity: () => {
+        Storage.updateStats({});
+    },
     getSessionState: (feature) => {
         return Storage.getKey(`session_${feature}`, null);
     },
