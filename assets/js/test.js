@@ -160,6 +160,16 @@ const Test = {
         Test.saveState();
     },
 
+    getDifficultyStars: (w) => {
+        let stars = 1;
+        if (w.level === 'A2') stars = 2;
+        if (w.level === 'B1') stars = 3;
+        if (w.level === 'B2') stars = 4;
+        if (w.level === 'C1') stars = 5;
+        if (w.german && w.german.length >= 10 && stars < 5) stars += 1;
+        return '⭐'.repeat(stars) + '<span style="opacity:0.2;">' + '⭐'.repeat(5 - stars) + '</span>' + `<span style="font-size:12px; font-weight:800; color:var(--accent-color); margin-left:8px;">${w.level || 'A1'}</span>`;
+    },
+
     showQuestion: () => {
         if (Test.currentIndex >= Test.words.length) {
             Test.end();
@@ -168,6 +178,8 @@ const Test = {
         
         const w = Test.words[Test.currentIndex];
         document.getElementById('test-question-number').innerText = `Question ${Test.currentIndex + 1} of ${Test.words.length}`;
+        const starContainer = document.getElementById('test-difficulty-stars');
+        if (starContainer) starContainer.innerHTML = Test.getDifficultyStars(w);
         document.getElementById('test-question').innerText = w.english;
         document.getElementById('test-input').value = '';
         document.getElementById('test-input').disabled = false;
