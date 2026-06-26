@@ -135,22 +135,26 @@ const Dictionary = {
         Dictionary.allWords.forEach(w => {
             const cleanDe = Dictionary.cleanWord(w.german).toLowerCase();
             const cleanEn = Dictionary.cleanWord(w.english).toLowerCase();
+            
+            // Strip article for noun root matching
+            const deNounMatch = cleanDe.match(/^(der|die|das)\s+(.*)/);
+            const deNoun = deNounMatch ? deNounMatch[2] : cleanDe;
 
             let score = 0;
 
             // Check exact match
-            if (cleanDe === q || cleanEn === q) {
+            if (cleanDe === q || cleanEn === q || deNoun === q) {
                 score = 100;
-            } else if (cleanDe.startsWith(q) || cleanEn.startsWith(q)) {
+            } else if (cleanDe.startsWith(q) || cleanEn.startsWith(q) || deNoun.startsWith(q)) {
                 score = 80;
             } else if (cleanDe.includes(q) || cleanEn.includes(q)) {
                 score = 60;
-            } else if (q.length > 3) {
-                const distDe = Dictionary.levenshtein(q, cleanDe);
+            } else if (q.length >= 4) {
+                const distDe = Dictionary.levenshtein(q, deNoun);
                 const distEn = Dictionary.levenshtein(q, cleanEn);
                 const minDist = Math.min(distDe, distEn);
-                if (minDist <= 1) score = 50;
-                else if (minDist <= 2 && q.length > 5) score = 40;
+                if (minDist <= 1 && q.length >= 5) score = 50;
+                else if (minDist <= 2 && q.length >= 7) score = 40;
             }
 
             if (score > 0) {
@@ -158,13 +162,17 @@ const Dictionary = {
             }
         });
 
+        // If we have strong matches (score >= 60), drop fuzzy matches (score < 60)
+        const hasStrongMatches = scoredResults.some(r => r.score >= 60);
+        const filteredResults = hasStrongMatches ? scoredResults.filter(r => r.score >= 60) : scoredResults;
+
         // Sort by score descending, then by shortest word length
-        scoredResults.sort((a, b) => {
+        filteredResults.sort((a, b) => {
             if (b.score !== a.score) return b.score - a.score;
             return Dictionary.cleanWord(a.item.german).length - Dictionary.cleanWord(b.item.german).length;
         });
 
-        const topResults = scoredResults.slice(0, 24).map(r => r.item);
+        const topResults = filteredResults.slice(0, 24).map(r => r.item);
         Dictionary.renderResults(topResults, query);
     },
 
