@@ -134,10 +134,6 @@ blitz-deutsch/
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- A modern web browser (Chrome, Firefox, Safari, Edge)
-- No backend server required (100% client-side)
-
 ### Installation
 
 **1. Clone the repository**
