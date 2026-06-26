@@ -38,6 +38,7 @@
             <button class="nav-btn" data-target="wotd">Word of Day</button>
             <button class="nav-btn" data-target="test">Test</button>
             <button class="nav-btn" data-target="dictionary">Dictionary</button>
+            <button class="nav-btn eye-catchy-play-btn" data-target="game">🎮 PLAY GAME ⚡</button>
         </div>
     </nav>
 
@@ -50,6 +51,45 @@
                 <h1>Willkommen!</h1>
                 <p>Master German vocabulary with speed and precision.</p>
             </header>
+
+            <!-- Eye Catchy Hero Play CTA -->
+            <div class="hero-play-container mt-4 mb-4 text-center">
+                <div class="hero-play-btn action-card" data-link="game" style="width:100%; max-width:750px; margin:0 auto; padding:20px 32px; background:linear-gradient(135deg, #ffb703, #fb8500); border:2px solid #fff; border-radius:24px; color:#111827; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:20px; box-shadow:0 0 35px rgba(255,183,3,0.5); transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <div style="display:flex; align-items:center; gap:16px; text-align:left;">
+                        <span style="font-size:44px; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.2));">🎮</span>
+                        <div>
+                            <div style="font-size:24px; font-weight:900; letter-spacing:0.5px;">PLAY WORT-SALAT GAME</div>
+                            <div style="font-size:14px; font-weight:700; opacity:0.85;">Unscramble 10 words & earn instant streak bonuses!</div>
+                        </div>
+                    </div>
+                    <span style="background:#111827; color:#ffb703; padding:10px 20px; border-radius:16px; font-size:16px; font-weight:900; white-space:nowrap; box-shadow:0 4px 12px rgba(0,0,0,0.2);">START ➔</span>
+                </div>
+            </div>
+
+            <!-- Streak & Stats Banner -->
+            <div class="stats-banner card mt-4 mb-4" style="display:flex; justify-content:space-around; align-items:center; flex-wrap:wrap; gap:16px; padding:20px; background:linear-gradient(135deg, rgba(31,41,55,0.9), rgba(17,24,39,0.9)); border:1px solid rgba(255,183,3,0.4); box-shadow:0 0 20px rgba(255,183,3,0.1);">
+                <div class="stat-box text-center" style="min-width:110px;">
+                    <div style="font-size:28px;">🔥</div>
+                    <div id="stat-streak" style="font-size:22px; font-weight:800; color:var(--accent-color);">0 days</div>
+                    <div style="font-size:11px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Day Streak</div>
+                </div>
+                <div class="stat-box text-center" style="min-width:110px;">
+                    <div style="font-size:28px;">📚</div>
+                    <div id="stat-words" style="font-size:22px; font-weight:800; color:var(--text-color);">0</div>
+                    <div style="font-size:11px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Words Reviewed</div>
+                </div>
+                <div class="stat-box text-center" style="min-width:110px;">
+                    <div style="font-size:28px;">📝</div>
+                    <div id="stat-tests" style="font-size:22px; font-weight:800; color:var(--text-color);">0</div>
+                    <div style="font-size:11px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Tests Taken</div>
+                </div>
+                <div class="stat-box text-center" style="min-width:110px;">
+                    <div style="font-size:28px;">🎯</div>
+                    <div id="stat-score" style="font-size:22px; font-weight:800; color:var(--text-color);">0%</div>
+                    <div style="font-size:11px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Avg Test Score</div>
+                </div>
+            </div>
+
             <div class="dashboard-grid">
                 <div class="card action-card" data-link="browser">
                     <h2>📚 Browse Vocabulary</h2>
@@ -70,6 +110,10 @@
                 <div class="card action-card" data-link="dictionary">
                     <h2>📖 Dictionary & Translator</h2>
                     <p>Search words, sounds & example sentences.</p>
+                </div>
+                <div class="card action-card" data-link="game">
+                    <h2>🎮 Word Jumble Game</h2>
+                    <p>Arrange 10 scrambled German words.</p>
                 </div>
             </div>
         </section>
@@ -173,6 +217,7 @@
                 </div>
                 <h3 id="test-question-number" class="text-sm text-muted mb-1"
                     style="font-weight: normal; margin-top: -10px;">Question 1</h3>
+                <div id="test-difficulty-stars" style="font-size:18px; margin-top:6px; margin-bottom:6px;"></div>
                 <div class="test-question-area" style="margin-top: 40px; margin-bottom: 40px;">
                     <h2 id="test-question" class="giant-text">Word</h2>
                     <p class="text-muted mt-2">Translate to German</p>
@@ -220,6 +265,64 @@
                 </div>
             </div>
         </section>
+
+        <!-- Game View (Wort-Salat Jumble) -->
+        <section id="view-game" class="view hidden">
+            <header class="view-header">
+                <h1>Word Jumble Game (*Wort-Salat*)</h1>
+                <p>Unscramble 10 German vocabulary words by clicking letters in the correct order.</p>
+            </header>
+
+            <div id="game-setup-area" class="card mt-4 text-center" style="max-width: 500px; margin: 32px auto; padding: 32px;">
+                <h3>Select Game Curriculum</h3>
+                <div class="mt-4" style="display:flex; flex-direction:column; gap:16px;">
+                    <select id="game-level-select" class="btn btn-secondary" style="width:100%; padding:12px; font-size:16px;"></select>
+                    <select id="game-chapter-select" class="btn btn-secondary" style="width:100%; padding:12px; font-size:16px;" disabled></select>
+                    <button id="game-start-btn" class="btn btn-primary mt-2" style="padding:14px; font-size:18px; font-weight:800;">🎮 Start Jumble Game</button>
+                </div>
+            </div>
+
+            <div id="game-play-area" class="card hidden text-center" style="max-width: 650px; margin: 24px auto; padding: 32px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                    <span id="game-progress-text" style="font-weight:800; color:var(--secondary-color);">Word 1 of 10</span>
+                    <span id="game-score-text" style="background:rgba(255,183,3,0.15); color:var(--accent-color); padding:4px 14px; border-radius:16px; font-weight:800;">0 pts</span>
+                </div>
+
+                <div style="margin-top: 20px; margin-bottom: 20px;">
+                    <span id="game-article-badge" style="display:none; color:#fff; padding:3px 12px; border-radius:12px; font-size:14px; font-weight:800; margin-bottom:8px; text-transform:uppercase;">der</span>
+                    <h2 id="game-clue-text" style="font-size:36px; font-weight:800; color:var(--text-color); margin:0;">Clue</h2>
+                    <p class="text-muted mt-1">🇬🇧 Translate & Arrange in German</p>
+                </div>
+
+                <!-- Answer Slots -->
+                <div id="game-answer-slots" style="display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin: 32px 0; min-height:60px;"></div>
+
+                <!-- Scrambled Tile Pool -->
+                <div id="game-letter-tiles" style="display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin: 24px 0; min-height:60px;"></div>
+
+                <!-- Feedback Area -->
+                <div id="game-feedback-msg" class="game-msg mt-3" style="min-height:30px; font-size:20px; font-weight:800;"></div>
+
+                <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-top:28px; border-top:1px solid var(--border-color); padding-top:20px;">
+                    <button id="game-undo-btn" class="btn btn-secondary" style="padding:8px 16px;">⏪ Undo</button>
+                    <button id="game-hint-btn" class="btn btn-secondary" style="padding:8px 16px;">💡 Hint (-2 pts)</button>
+                    <button id="game-skip-btn" class="btn btn-secondary" style="padding:8px 16px; color:#ef4444;">⏭️ Skip</button>
+                </div>
+            </div>
+
+            <div id="game-result-area" class="card hidden text-center" style="max-width: 500px; margin: 32px auto; padding: 40px;">
+                <div style="font-size:64px; margin-bottom:16px;">🏆</div>
+                <h2>Game Complete!</h2>
+                <p class="text-muted mt-2">Here is your final Wort-Salat score:</p>
+                
+                <div style="margin:24px 0;">
+                    <span id="game-final-score" style="font-size:56px; font-weight:800; color:var(--accent-color);">0</span>
+                    <span style="font-size:24px; color:#9ca3af;"> / <span id="game-total-possible">100</span></span>
+                </div>
+
+                <button id="game-play-again-btn" class="btn btn-primary" style="width:100%; padding:14px; font-size:18px;">🔄 Play Again</button>
+            </div>
+        </section>
     </main>
 
     <footer class="app-footer">
@@ -234,6 +337,7 @@
     <script src="assets/js/flashcards.js"></script>
     <script src="assets/js/test.js"></script>
     <script src="assets/js/dictionary.js"></script>
+    <script src="assets/js/game.js"></script>
     <script src="assets/js/app.js"></script>
 </body>
 
