@@ -1,896 +1,344 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
-
-:root {
-    /* Smooth German Theme Palette (Dark Mode) */
-    --bg-color: #111827;
-    /* Deep soft blue-black */
-    --text-color: #F9FAFB;
-    --accent-color: #FFB703;
-    /* Smooth amber/gold */
-    --accent-dark: #FB8500;
-    --success-color: #2A9D8F;
-    /* Softened emerald */
-    --error-color: #E63946;
-    /* Premium crimson red */
-    --secondary-color: #9CA3AF;
-    --card-bg: #1F2937;
-    --border-color: #374151;
-    --font-sans: 'Nunito', -apple-system, sans-serif;
-    --spacing-unit: 16px;
-    --border-radius: 20px;
-    /* Very soft rounded corners */
-    --border-radius-sm: 12px;
-    --transition-speed: 0.3s;
-    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    width: 100%;
-    max-width: 100%;
-}
-
-body {
-    font-family: var(--font-sans);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    line-height: 1.6;
-    font-size: 16px;
-    display: flex;
-    flex-direction: column;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-}
-
-/* Typography */
-h1,
-h2,
-h3,
-p,
-span,
-div {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-}
-
-h1 {
-    font-size: 36px;
-    font-weight: 800;
-    margin-bottom: var(--spacing-unit);
-    color: var(--text-color);
-}
-
-h2 {
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 8px;
-}
-
-h3 {
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.giant-text {
-    font-size: 64px;
-    line-height: 1.2;
-    font-weight: 800;
-    word-break: break-word;
-    hyphens: auto;
-}
-
-.giant-text.long-text {
-    font-size: 42px;
-}
-
-.giant-text.very-long-text {
-    font-size: 28px;
-}
-
-.giant-score {
-    font-size: 96px;
-    font-weight: 800;
-    color: var(--accent-dark);
-    text-shadow: 0 4px 12px rgba(251, 133, 0, 0.2);
-    word-break: break-word;
-}
-
-.large-text {
-    font-size: 28px;
-    font-weight: 600;
-    word-break: break-word;
-    hyphens: auto;
-}
-
-.large-text.long-text {
-    font-size: 22px;
-}
-
-.large-text.very-long-text {
-    font-size: 18px;
-}
-
-.text-muted {
-    color: var(--secondary-color);
-}
-
-.mt-4 {
-    margin-top: calc(var(--spacing-unit) * 1.5);
-}
-
-/* Navigation */
-.app-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
-    background-color: var(--card-bg);
-    box-shadow: var(--shadow-sm);
-    z-index: 50;
-    position: relative;
-    border-radius: 0 0 24px 24px;
-}
-
-.nav-brand {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-}
-
-.nav-brand span {
-    color: var(--error-color);
-    /* Soft crimson */
-}
-
-.nav-brand::before {
-    content: '';
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    background-color: var(--accent-color);
-    border-radius: 50%;
-    margin-right: 4px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 8px;
-}
-
-.nav-btn {
-    background: none;
-    border: none;
-    color: var(--secondary-color);
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    padding: 10px 16px;
-    border-radius: var(--border-radius-sm);
-    transition: all var(--transition-speed) ease;
-}
-
-.nav-btn:hover {
-    color: var(--text-color);
-    background-color: var(--bg-color);
-}
-
-.nav-btn.active {
-    color: var(--accent-dark);
-    background-color: rgba(255, 183, 3, 0.1);
-}
-
-.hamburger-btn {
-    display: none;
-}
-
-/* Layout */
-#app-content {
-    flex: 1;
-    padding: calc(var(--spacing-unit) * 3);
-    max-width: 1100px;
-    margin: 0 auto;
-    width: 100%;
-    position: relative;
-    z-index: 10;
-}
-
-.view {
-    display: none;
-}
-
-.view.active {
-    display: block;
-    animation: smoothFade 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hidden {
-    display: none !important;
-}
-
-@keyframes smoothFade {
-    from {
-        opacity: 0;
-        transform: translateY(15px) scale(0.98);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Components */
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: calc(var(--spacing-unit) * 2);
-    margin-top: calc(var(--spacing-unit) * 2);
-}
-
-.card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    padding: calc(var(--spacing-unit) * 2.5);
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-speed) cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.action-card {
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-
-.action-card::after {
-    content: '→';
-    position: absolute;
-    bottom: 24px;
-    right: 24px;
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--accent-dark);
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: all var(--transition-speed);
-}
-
-.action-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
-    border-color: transparent;
-}
-
-.action-card:hover::after {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.btn {
-    min-height: 52px;
-    padding: 0 28px;
-    font-family: var(--font-sans);
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: var(--border-radius-sm);
-    cursor: pointer;
-    border: none;
-    transition: all var(--transition-speed) cubic-bezier(0.16, 1, 0.3, 1);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: var(--shadow-sm);
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.btn:active {
-    transform: translateY(0);
-    box-shadow: var(--shadow-sm);
-}
-
-.btn-primary {
-    background-color: var(--accent-color);
-    color: #1F2937;
-    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%);
-}
-
-.btn-secondary {
-    background-color: var(--card-bg);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-}
-
-.btn-success {
-    background-color: var(--success-color);
-    color: white;
-}
-
-.btn-danger {
-    background-color: var(--error-color);
-    color: white;
-}
-
-/* Vocab Browser */
-.vocab-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: var(--spacing-unit);
-}
-
-.vocab-item {
-    background-color: var(--card-bg);
-    border-radius: var(--border-radius-sm);
-    padding: calc(var(--spacing-unit) * 1.5);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--transition-speed);
-}
-
-.vocab-item:hover {
-    transform: translateY(-2px);
-}
-
-.vocab-info h3 {
-    margin-bottom: 4px;
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.vocab-actions {
-    display: flex;
-    gap: 8px;
-}
-
-.listen-de-btn,
-.listen-en-btn {
-    padding: 8px;
-    min-height: 40px;
-}
-
-/* Vocab Player UI */
-#vocab-player-container {
-    background: linear-gradient(135deg, #2a1114, #111827);
-    border-radius: var(--border-radius);
-    padding: 60px 20px;
-    text-align: center;
-    color: white;
-    margin-top: 24px;
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s ease-in-out;
-}
-
-.vocab-player-badge {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    padding: 6px 16px;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 32px;
-}
-
-.vocab-player-german {
-    font-size: 48px;
-    font-weight: 800;
-    margin-bottom: 24px;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    word-break: break-word;
-}
-
-.vocab-player-divider {
-    height: 1px;
-    background: rgba(255, 255, 255, 0.2);
-    width: 60px;
-    margin: 0 auto 16px auto;
-}
-
-.vocab-player-means {
-    font-size: 16px;
-    font-style: italic;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 16px;
-}
-
-.vocab-player-english {
-    font-size: 32px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 48px;
-}
-
-.vocab-player-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 24px;
-    border-radius: 40px;
-    width: max-content;
-    margin: 0 auto;
-}
-
-.vp-btn {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    cursor: pointer;
-    transition: all var(--transition-speed);
-}
-
-.vp-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: scale(1.05);
-}
-
-.vp-btn-play {
-    width: 72px;
-    height: 72px;
-    background: rgba(230, 57, 70, 0.2);
-    /* Deep red tint */
-    border-color: rgba(230, 57, 70, 0.5);
-}
-
-.vp-btn-play:hover {
-    background: rgba(230, 57, 70, 0.4);
-}
-
-.vocab-info h3 {
-    text-transform: none;
-    letter-spacing: normal;
-}
-
-.vocab-actions {
-    display: flex;
-    gap: 8px;
-}
-
-/* Progress Bar */
-.progress-bar-container {
-    width: 100%;
-    height: 12px;
-    background-color: var(--border-color);
-    border-radius: 6px;
-    margin-bottom: calc(var(--spacing-unit) * 2);
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    background-color: var(--accent-color);
-    width: 0%;
-    border-radius: 6px;
-    background: linear-gradient(90deg, var(--accent-color) 0%, var(--accent-dark) 100%);
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Inputs */
-select,
-input[type="text"] {
-    min-height: 52px;
-    padding: 0 20px;
-    font-family: var(--font-sans);
-    font-size: 18px;
-    font-weight: 600;
-    border: 2px solid var(--border-color);
-    border-radius: var(--border-radius-sm);
-    background-color: var(--card-bg);
-    color: var(--text-color);
-    width: 100%;
-    max-width: 400px;
-    transition: all var(--transition-speed);
-    appearance: none;
-    -webkit-appearance: none;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
-}
-
-select {
-    padding-right: 40px;
-    /* Ensure space for the custom arrow */
-}
-
-select:focus,
-input[type="text"]:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(255, 183, 3, 0.1);
-}
-
-/* Custom dropdown arrow for select */
-select {
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%231F2937%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-    background-repeat: no-repeat, repeat;
-    background-position: right 1em top 50%, 0 0;
-    background-size: .65em auto, 100%;
-}
-
-@media (prefers-color-scheme: dark) {
-    select {
-        background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23F9FAFB%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-    }
-}
-
-/* Flashcards */
-.flashcard {
-    perspective: 1200px;
-    width: 100%;
-    max-width: 600px;
-    height: 400px;
-    margin: 0 auto calc(var(--spacing-unit) * 3);
-    cursor: pointer;
-}
-
-.flashcard-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    transform-style: preserve-3d;
-}
-
-.flashcard.flipped .flashcard-inner {
-    transform: rotateY(180deg);
-}
-
-.flashcard-front,
-.flashcard-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--card-bg);
-    border-radius: var(--border-radius);
-    padding: calc(var(--spacing-unit) * 3);
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--border-color);
-}
-
-.flashcard-back {
-    transform: rotateY(180deg);
-    background: linear-gradient(to bottom, var(--card-bg), rgba(255, 183, 3, 0.05));
-    border-bottom: 4px solid var(--accent-color);
-}
-
-.flashcard-controls {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: calc(var(--spacing-unit) * 1.5);
-}
-
-/* Sprechen */
-.recording-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: calc(var(--spacing-unit) * 2);
-    margin: calc(var(--spacing-unit) * 4) 0;
-}
-
-.record-btn {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    /* Smooth circle */
-    background-color: var(--card-bg);
-    border: none;
-    box-shadow: var(--shadow-md);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.record-btn::after {
-    content: '';
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: var(--error-color);
-    transition: all 0.3s;
-    box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
-}
-
-.record-btn:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-lg);
-}
-
-.record-btn.recording {
-    box-shadow: 0 0 0 8px rgba(230, 57, 70, 0.15);
-}
-
-.record-btn.recording::after {
-    border-radius: 8px;
-    /* Soft squircle when recording */
-    width: 40px;
-    height: 40px;
-    animation: pulseSoftRed 1.5s infinite alternate;
-}
-
-@keyframes pulseSoftRed {
-    from {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4);
-    }
-
-    to {
-        transform: scale(0.9);
-        box-shadow: 0 0 0 16px rgba(230, 57, 70, 0);
-    }
-}
-
-canvas#waveform-canvas {
-    width: 100%;
-    max-width: 600px;
-    height: 120px;
-    background-color: var(--card-bg);
-    border-radius: var(--border-radius);
-    box-shadow: inset var(--shadow-sm);
-    border: 1px solid var(--border-color);
-}
-
-/* Sprechen Modes */
-.paragraph-word {
-    display: inline-block;
-    margin: 0 2px;
-    padding: 2px 6px;
-    border-radius: 6px;
-    transition: all 0.3s;
-    font-weight: 600;
-}
-
-.word-highlighted {
-    background-color: rgba(255, 183, 3, 0.2);
-    color: var(--accent-dark);
-}
-
-.word-error {
-    background-color: rgba(230, 57, 70, 0.1);
-    color: var(--error-color);
-    text-decoration: none;
-}
-
-#sprechen-target-wrapper {
-    line-height: 2;
-    margin-bottom: 3rem;
-    font-size: 1.8rem;
-    font-weight: 600;
-    text-align: left;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 24px;
-    background-color: var(--card-bg);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-sm);
-}
-
-.timer-display {
-    padding: 12px 24px;
-    background-color: var(--card-bg);
-    border-radius: var(--border-radius-sm);
-    box-shadow: var(--shadow-sm);
-    display: inline-block;
-    font-size: 32px;
-    font-weight: 800;
-    font-variant-numeric: tabular-nums;
-    color: var(--text-color);
-}
-
-/* Test */
-.test-question-area {
-    text-align: center;
-    margin: calc(var(--spacing-unit) * 6) 0;
-}
-
-.test-controls {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: calc(var(--spacing-unit) * 1.5);
-}
-
-.score-display {
-    text-align: center;
-    margin: calc(var(--spacing-unit) * 3) 0;
-    font-size: 48px;
-    font-weight: 800;
-}
-
-/* Footer */
-.app-footer {
-    text-align: center;
-    padding: calc(var(--spacing-unit) * 2);
-    color: var(--secondary-color);
-    font-size: 15px;
-    font-weight: 600;
-    margin-top: auto;
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .app-nav {
-        border-radius: 0 0 16px 16px;
-        padding: var(--spacing-unit);
-    }
-
-    #app-content {
-        padding: calc(var(--spacing-unit) * 1.5);
-    }
-
-    .card {
-        padding: calc(var(--spacing-unit) * 1.5);
-    }
-
-    .hamburger-btn {
-        display: flex;
-        background: none;
-        border: none;
-        color: var(--text-color);
-        cursor: pointer;
-        padding: 8px;
-        align-items: center;
-        justify-content: center;
-        transition: color var(--transition-speed);
-    }
-
-    .hamburger-btn:hover {
-        color: var(--accent-color);
-    }
-
-    .nav-links {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: var(--card-bg);
-        flex-direction: column;
-        padding: var(--spacing-unit);
-        gap: 8px;
-        box-shadow: var(--shadow-md);
-        border-radius: 0 0 24px 24px;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transform: translateY(-10px);
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        z-index: 40;
-    }
-
-    .nav-links.nav-active {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transform: translateY(0);
-    }
-
-    .nav-btn {
-        width: 100%;
-        padding: 16px;
-        font-size: 16px;
-        text-align: left;
-        display: block;
-    }
-
-    .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .flashcard-controls {
-        flex-direction: column;
-    }
-
-    .test-controls {
-        flex-direction: column;
-    }
-
-    h1 {
-        font-size: 28px;
-    }
-
-    .giant-text {
-        font-size: 36px;
-    }
-
-    .giant-text.long-text {
-        font-size: 28px;
-    }
-
-    .giant-text.very-long-text {
-        font-size: 22px;
-    }
-
-    /* Scaled down for very long words on mobile */
-    .giant-score {
-        font-size: 56px;
-    }
-
-    .large-text {
-        font-size: 24px;
-    }
-
-    .large-text.long-text {
-        font-size: 20px;
-    }
-
-    .large-text.very-long-text {
-        font-size: 16px;
-    }
-
-    .flashcard {
-        height: 350px;
-    }
-}
-
-/* Custom Modal adjustments */
-#custom-confirm>div {
-    border: none !important;
-    border-radius: var(--border-radius) !important;
-    background-color: var(--card-bg) !important;
-    color: var(--text-color) !important;
-    box-shadow: var(--shadow-lg) !important;
-}
-
-/* Dictionary & Translator Styles */
-.search-container {
-    background: rgba(31, 41, 55, 0.8) !important;
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-md);
-    transition: all 0.3s ease;
-}
-
-.search-container:focus-within {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 16px rgba(255, 183, 3, 0.2);
-}
-
-.dict-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-    border-color: rgba(255, 183, 3, 0.4);
-}
-
-.dict-listen-de:hover, .dict-listen-en:hover, .dict-listen-ex:hover {
-    background-color: var(--accent-color) !important;
-    color: #000 !important;
-    border-color: var(--accent-color) !important;
-}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blitz Deutsch</title>
+    <meta name="description" content="Minimalistic German vocabulary learning app">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <!-- Custom Confirm Modal -->
+    <div id="custom-confirm" class="hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; display:flex; justify-content:center; align-items:center;">
+        <div style="background:var(--card-bg); padding:32px; border-radius:24px; max-width:400px; text-align:center; box-shadow: var(--shadow-lg);">
+            <h3 style="margin-top:0; color:var(--text-color);">Quit Test?</h3>
+            <p style="color:#aaa;">Are you sure you want to quit the test? Your progress will be lost.</p>
+            <div style="display:flex; gap:16px; justify-content:center; margin-top:24px;">
+                <button id="custom-confirm-cancel" class="btn btn-secondary" style="padding:8px 24px;">Cancel</button>
+                <button id="custom-confirm-ok" class="btn btn-primary" style="padding:8px 24px; background-color:#e74c3c;">Quit Test</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="app-nav">
+        <a href="#home" class="nav-brand">Blitz<span>Deutsch</span></a>
+        <button id="mobile-menu-btn" class="hamburger-btn" aria-label="Toggle navigation">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <div class="nav-links">
+            <button class="nav-btn active" data-target="home">Home</button>
+            <button class="nav-btn" data-target="browser">Learn Vocab</button>
+            <button class="nav-btn" data-target="flashcards">Flashcards</button>
+            <button class="nav-btn" data-target="wotd">Word of Day</button>
+            <button class="nav-btn" data-target="test">Test</button>
+            <button class="nav-btn" data-target="dictionary">Dictionary</button>
+            <button class="nav-btn eye-catchy-play-btn" data-target="game">🎮 PLAY GAME ⚡</button>
+        </div>
+    </nav>
+
+    <main id="app-content">
+        <!-- Views will be injected or toggled here -->
+
+        <!-- Home View -->
+        <section id="view-home" class="view active">
+            <header class="view-header">
+                <h1>Willkommen!</h1>
+                <p>Master German vocabulary with speed and precision.</p>
+            </header>
+
+            <!-- Eye Catchy Hero Play CTA -->
+            <div class="hero-play-container mt-4 mb-4 text-center">
+                <div class="hero-play-btn action-card" data-link="game" style="width:100%; max-width:750px; margin:0 auto; padding:20px 32px; background:linear-gradient(135deg, #ffb703, #fb8500); border:2px solid #fff; border-radius:24px; color:#111827; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:20px; box-shadow:0 0 35px rgba(255,183,3,0.5); transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                    <div style="display:flex; align-items:center; gap:16px; text-align:left;">
+                        <span style="font-size:44px; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.2));">🎮</span>
+                        <div>
+                            <div style="font-size:24px; font-weight:900; letter-spacing:0.5px;">PLAY WORT-SALAT GAME</div>
+                            <div style="font-size:14px; font-weight:700; opacity:0.85;">Unscramble 10 words & earn instant streak bonuses!</div>
+                        </div>
+                    </div>
+                    <span style="background:#111827; color:#ffb703; padding:10px 20px; border-radius:16px; font-size:16px; font-weight:900; white-space:nowrap; box-shadow:0 4px 12px rgba(0,0,0,0.2);">START ➔</span>
+                </div>
+            </div>
+
+            <!-- Streak & Stats Banner -->
+            <div class="stats-banner card mt-4 mb-4" style="display:flex; justify-content:space-around; align-items:center; flex-wrap:wrap; gap:16px; padding:20px; background:linear-gradient(135deg, rgba(31,41,55,0.9), rgba(17,24,39,0.9)); border:1px solid rgba(255,183,3,0.4); box-shadow:0 0 20px rgba(255,183,3,0.1);">
+                <div class="stat-box text-center" style="min-width:110px;">
+                    <div style="font-size:28px;">🔥</div>
+                    <div id="stat-streak" style="font-size:22px; font-weight:800; color:var(--accent-color);">0 days</div>
+                    <div style="font-size:11px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Day Streak</div>
+                </div>
+                <div class="stat-box text-center" style="min-width:110px;">
+                    <div style="font-size:28px;">📚</div>
+                    <div id="stat-words" style="font-size:22px; font-weight:800; color:var(--text-color);">0</div>
+                    <div style="font-size:11px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Words Reviewed</div>
+                </div>
+                <div class="stat-box text-center" style="min-width:110px;">
+                    <div style="font-size:28px;">📝</div>
+                    <div id="stat-tests" style="font-size:22px; font-weight:800; color:var(--text-color);">0</div>
+                    <div style="font-size:11px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Tests Taken</div>
+                </div>
+                <div class="stat-box text-center" style="min-width:110px;">
+                    <div style="font-size:28px;">🎯</div>
+                    <div id="stat-score" style="font-size:22px; font-weight:800; color:var(--text-color);">0%</div>
+                    <div style="font-size:11px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-top:2px;">Avg Test Score</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card action-card" data-link="browser">
+                    <h2>📚 Browse Vocabulary</h2>
+                    <p>Explore words by level and chapter.</p>
+                </div>
+                <div class="card action-card" data-link="flashcards">
+                    <h2>🗂️ Flashcards</h2>
+                    <p>Practice with spaced repetition.</p>
+                </div>
+                <div class="card action-card" data-link="wotd">
+                    <h2>🌟 Word of the Day</h2>
+                    <p>Learn something new today.</p>
+                </div>
+                <div class="card action-card" data-link="test">
+                    <h2>📝 Take a Test</h2>
+                    <p>Challenge your knowledge.</p>
+                </div>
+                <div class="card action-card" data-link="dictionary">
+                    <h2>📖 Dictionary & Translator</h2>
+                    <p>Search words, sounds & example sentences.</p>
+                </div>
+                <div class="card action-card" data-link="game">
+                    <h2>🎮 Word Jumble Game</h2>
+                    <p>Arrange 10 scrambled German words.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browser View -->
+        <section id="view-browser" class="view hidden">
+            <header class="view-header">
+                <h1>Vocabulary Browser</h1>
+                <div class="filters" style="display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; margin-bottom:16px;">
+                    <select id="browser-level-select">
+                        <option value="">All Levels</option>
+                    </select>
+                    <select id="browser-chapter-select" disabled>
+                        <option value="">All Chapters</option>
+                    </select>
+                </div>
+            </header>
+            <div id="browser-list" class="vocab-list"></div>
+        </section>
+
+        <!-- Flashcards View -->
+        <section id="view-flashcards" class="view hidden">
+            <header class="view-header">
+                <h1>Flashcards</h1>
+                <div id="flashcard-setup" class="setup-panel"
+                    style="display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; margin-bottom:24px;">
+                    <select id="flashcard-level-select">
+                        <option value="A1">A1</option>
+                    </select>
+                    <select id="flashcard-chapter-select">
+                        <option value="">All Chapters</option>
+                    </select>
+                    <button id="start-flashcards-btn" class="btn btn-primary">Start Practice</button>
+                </div>
+            </header>
+            <div id="flashcard-container" class="hidden">
+                <div class="progress-bar-container">
+                    <div id="flashcard-progress" class="progress-bar"></div>
+                </div>
+                <div class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <h2 id="fc-german" class="fc-word giant-text">Word</h2>
+                            <p id="fc-article" class="fc-meta large-text text-muted">der</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <h2 id="fc-english" class="fc-word large-text">Translation</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="flashcard-controls mt-4" style="display:flex; justify-content:center; gap: 10px;">
+                    <button id="fc-quit" class="btn btn-secondary"
+                        style="background-color: var(--error-color);">Quit</button>
+                    <button id="fc-prev" class="btn btn-secondary">Prev</button>
+                    <button id="fc-flip" class="btn btn-primary">Flip</button>
+                    <button id="fc-next" class="btn btn-secondary">Next</button>
+                </div>
+            </div>
+            <div id="flashcard-summary" class="hidden">
+                <h2>Practice Complete!</h2>
+                <p>You reviewed <span id="fc-total-reviewed">0</span> words.</p>
+                <button id="fc-restart-btn" class="btn btn-primary mt-4">Practice Again</button>
+            </div>
+        </section>
+
+        <!-- Word of the Day View -->
+        <section id="view-wotd" class="view hidden">
+            <header class="view-header">
+                <h1>Word of the Day</h1>
+            </header>
+            <div class="wotd-card card" style="text-align:center; max-width:600px; margin: 40px auto;">
+                <span class="level-badge" id="wotd-level"
+                    style="background:var(--border-color); color:var(--text-color); padding:6px 16px; font-weight:800; border-radius:20px;">A1</span>
+                <h2 id="wotd-german" class="giant-text" style="margin-top:16px;">Wort</h2>
+                <p id="wotd-article" class="meta-text text-muted" style="margin-bottom:16px; font-size:24px;">das</p>
+                <h3 id="wotd-english" class="large-text">Word</h3>
+                <div class="wotd-actions" style="margin-top:32px; display:flex; justify-content:center; gap:16px;">
+                    <button id="wotd-listen" class="btn btn-secondary">🔊 Listen</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test View -->
+        <section id="view-test" class="view hidden">
+            <header class="view-header">
+                <h1>Vocabulary Test</h1>
+                <div id="test-setup" class="setup-panel"
+                    style="display:flex; flex-wrap:wrap; gap:16px; margin-top:16px; margin-bottom:24px;">
+                    <select id="test-level-select">
+                        <option value="A1">A1</option>
+                    </select>
+                    <select id="test-chapter-select">
+                        <option value="">All Chapters</option>
+                    </select>
+                    <button id="start-test-btn" class="btn btn-primary">Start Test</button>
+                </div>
+            </header>
+            <div id="test-container" class="card hidden text-center">
+                <div class="progress-container mb-2">
+                    <div class="progress-bar" id="test-progress" style="width: 0%"></div>
+                </div>
+                <h3 id="test-question-number" class="text-sm text-muted mb-1"
+                    style="font-weight: normal; margin-top: -10px;">Question 1</h3>
+                <div id="test-difficulty-stars" style="font-size:18px; margin-top:6px; margin-bottom:6px;"></div>
+                <div class="test-question-area" style="margin-top: 40px; margin-bottom: 40px;">
+                    <h2 id="test-question" class="giant-text">Word</h2>
+                    <p class="text-muted mt-2">Translate to German</p>
+                    <p class="text-warning mt-2" style="font-size: 0.9em; color: #f39c12; margin-top: 8px;">⚠️ Remember
+                        to include the article (der/die/das) for nouns!</p>
+                    <input type="text" id="test-input" placeholder="Type your answer..." autocomplete="off"
+                        style="margin-top:24px;">
+                    <div id="test-feedback" class="mt-4" style="min-height: 32px; font-weight:bold;"></div>
+                </div>
+                <div class="test-controls mt-4" style="display:flex; justify-content:center; gap: 10px;">
+                    <button id="test-quit" class="btn btn-secondary"
+                        style="background-color: var(--error-color);">Quit</button>
+                    <button id="test-submit-test" class="btn btn-secondary"
+                        style="background-color: #f39c12; color: #fff; border-color: #f39c12;">Submit Test</button>
+                    <button id="test-next" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+            <div id="test-results" class="hidden" style="text-align:center;">
+                <h2>Test Complete</h2>
+                    <div class="score-display">
+                        <span id="test-final-score" class="score-number">0</span>
+                        <span class="score-label">out of <span id="test-total-questions-result">25</span></span>
+                    </div>
+                    <button id="test-download-btn" class="btn btn-secondary mt-4">📥 Download Answer Key</button>
+                    <button id="test-home-btn" class="btn btn-primary mt-4">Back to Dashboard</button>
+            </div>
+        </section>
+
+        <!-- Dictionary View -->
+        <section id="view-dictionary" class="view hidden">
+            <header class="view-header">
+                <h1>Dictionary & Translator</h1>
+                <p>Search German or English words for instant translation, sounds, and example sentences.</p>
+                <div class="search-container card mt-4" style="padding: 16px 24px; display: flex; gap: 12px; align-items: center; max-width: 600px; margin: 24px auto;">
+                    <span style="font-size: 20px;">🔍</span>
+                    <input type="text" id="dict-search-input" placeholder="Type an English or German word..." autocomplete="off" style="border: none; background: transparent; color: var(--text-color); font-size: 18px; width: 100%; outline: none;">
+                    <button id="dict-clear-btn" style="display: none; background: transparent; border: none; color: #9ca3af; font-size: 20px; cursor: pointer; padding: 4px;">✕</button>
+                </div>
+            </header>
+            <div id="dict-results" class="grid-container mt-4" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                <div class="dict-placeholder card text-center" style="grid-column: 1 / -1; padding: 48px 24px;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">🔍 📖</div>
+                    <h3>Search German & English Vocabulary</h3>
+                    <p class="text-muted mt-2">Type any word above to translate, listen to native pronunciation, and see example sentences.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game View (Wort-Salat Jumble) -->
+        <section id="view-game" class="view hidden">
+            <header class="view-header">
+                <h1>Word Jumble Game (*Wort-Salat*)</h1>
+                <p>Unscramble 10 German vocabulary words by clicking letters in the correct order.</p>
+            </header>
+
+            <div id="game-setup-area" class="card mt-4 text-center" style="max-width: 500px; margin: 32px auto; padding: 32px;">
+                <h3>Select Game Curriculum</h3>
+                <div class="mt-4" style="display:flex; flex-direction:column; gap:16px;">
+                    <select id="game-level-select" class="btn btn-secondary" style="width:100%; padding:12px; font-size:16px;"></select>
+                    <select id="game-chapter-select" class="btn btn-secondary" style="width:100%; padding:12px; font-size:16px;" disabled></select>
+                    <button id="game-start-btn" class="btn btn-primary mt-2" style="padding:14px; font-size:18px; font-weight:800;">🎮 Start Jumble Game</button>
+                </div>
+            </div>
+
+            <div id="game-play-area" class="card hidden text-center" style="max-width: 650px; margin: 24px auto; padding: 32px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                    <span id="game-progress-text" style="font-weight:800; color:var(--secondary-color);">Word 1 of 10</span>
+                    <span id="game-score-text" style="background:rgba(255,183,3,0.15); color:var(--accent-color); padding:4px 14px; border-radius:16px; font-weight:800;">0 pts</span>
+                </div>
+
+                <div style="margin-top: 20px; margin-bottom: 20px;">
+                    <span id="game-article-badge" style="display:none; color:#fff; padding:3px 12px; border-radius:12px; font-size:14px; font-weight:800; margin-bottom:8px; text-transform:uppercase;">der</span>
+                    <h2 id="game-clue-text" style="font-size:36px; font-weight:800; color:var(--text-color); margin:0;">Clue</h2>
+                    <p class="text-muted mt-1">🇬🇧 Translate & Arrange in German</p>
+                </div>
+
+                <!-- Answer Slots -->
+                <div id="game-answer-slots" style="display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin: 32px 0; min-height:60px;"></div>
+
+                <!-- Scrambled Tile Pool -->
+                <div id="game-letter-tiles" style="display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin: 24px 0; min-height:60px;"></div>
+
+                <!-- Feedback Area -->
+                <div id="game-feedback-msg" class="game-msg mt-3" style="min-height:30px; font-size:20px; font-weight:800;"></div>
+
+                <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-top:28px; border-top:1px solid var(--border-color); padding-top:20px;">
+                    <button id="game-undo-btn" class="btn btn-secondary" style="padding:8px 16px;">⏪ Undo</button>
+                    <button id="game-hint-btn" class="btn btn-secondary" style="padding:8px 16px;">💡 Hint (-2 pts)</button>
+                    <button id="game-skip-btn" class="btn btn-secondary" style="padding:8px 16px; color:#ef4444;">⏭️ Skip</button>
+                </div>
+            </div>
+
+            <div id="game-result-area" class="card hidden text-center" style="max-width: 500px; margin: 32px auto; padding: 40px;">
+                <div style="font-size:64px; margin-bottom:16px;">🏆</div>
+                <h2>Game Complete!</h2>
+                <p class="text-muted mt-2">Here is your final Wort-Salat score:</p>
+                
+                <div style="margin:24px 0;">
+                    <span id="game-final-score" style="font-size:56px; font-weight:800; color:var(--accent-color);">0</span>
+                    <span style="font-size:24px; color:#9ca3af;"> / <span id="game-total-possible">100</span></span>
+                </div>
+
+                <button id="game-play-again-btn" class="btn btn-primary" style="width:100%; padding:14px; font-size:18px;">🔄 Play Again</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>Made with 💙 by Aryan Gadhwal</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="data/vocab.js"></script>
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/flashcards.js"></script>
+    <script src="assets/js/test.js"></script>
+    <script src="assets/js/dictionary.js"></script>
+    <script src="assets/js/game.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
