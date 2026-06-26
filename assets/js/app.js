@@ -2,6 +2,8 @@ const App = {
     init: async () => {
         await Data.init();
         
+        if (window.Storage && Storage.recordActivity) Storage.recordActivity();
+        
         // Init UI components
         UI.renderBrowserFilters();
         UI.renderDashboard();
@@ -10,6 +12,7 @@ const App = {
         Flashcards.init();
         Test.init();
         if (window.Dictionary) Dictionary.init();
+        if (window.Game) Game.init();
         
         App.setupNavigation();
         
