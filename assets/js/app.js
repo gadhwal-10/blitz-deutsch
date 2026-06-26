@@ -9,6 +9,7 @@ const App = {
         
         Flashcards.init();
         Test.init();
+        if (window.Dictionary) Dictionary.init();
         
         App.setupNavigation();
         
@@ -156,6 +157,11 @@ const App = {
         if (baseViewId === 'browser' && window.UI) {
             window.UI.renderBrowserFilters();
             window.UI.renderVocabList();
+        }
+
+        if (baseViewId === 'dictionary') {
+            const searchEl = document.getElementById('dict-search-input');
+            if (searchEl) setTimeout(() => searchEl.focus(), 100);
         }
 
         // Auto-close mobile menu on navigation
