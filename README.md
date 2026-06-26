@@ -85,9 +85,9 @@ Whether you're preparing for Goethe German exams, language tests, or simply impr
 
 | Level | Description | Words |
 |------|-------------|-------|
-| 🟢 A1 | Beginner German Vocabulary | 150+ |
-| 🔵 A2 | Elementary German Vocabulary | 200+ |
-| 🟠 B1 | Intermediate German Vocabulary | 150+ |
+| 🟢 A1 | Beginner German Vocabulary | 1800+ |
+| 🔵 A2 | Elementary German Vocabulary | 1800+ |
+| 🟠 B1 | Intermediate German Vocabulary | 1800+ |
 
 ---
 
