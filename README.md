@@ -1,125 +1,209 @@
 # 🇩🇪 Blitz Deutsch
 
-Blitz Deutsch is an interactive German vocabulary learning platform designed for learners from **A1 to B1 level**. The application combines structured vocabulary learning, daily word practice, flashcards, and level-based vocabulary tests with instant scoring and detailed answer keys to help learners improve their German efficiently.
+<p align="center">
+  <img src="https://img.shields.io/badge/Level-A1--B1-blue?style=for-the-badge" alt="Level">
+  <img src="https://img.shields.io/badge/JavaScript-Vanilla_JS-yellow?style=for-the-badge" alt="JavaScript">
+  <img src="https://img.shields.io/badge/Responsive-Yes-success?style=for-the-badge" alt="Responsive">
+  <img src="https://img.shields.io/badge/Open%20Source-❤️-red?style=for-the-badge" alt="Open Source">
+</p>
 
-## 🚀 Live Demo
+<p align="center">
+A modern German vocabulary learning platform for <b>A1–B1 learners</b> featuring structured vocabulary, a bilingual German-English dictionary, Word of the Day, flashcards, and level-wise & chapter-wise vocabulary tests.
+</p>
 
-https://blitz-deutsch.vercel.app
+---
 
-## 📚 Features
+## 🌐 Live Demo
 
-### 📖 Vocabulary Learning
-- A1 German Vocabulary
-- A2 German Vocabulary
-- B1 German Vocabulary
-- German → English translations
-- Organized by proficiency level
-- Easy navigation between vocabulary categories
+🔗 **https://blitz-deutsch.vercel.app**
 
-### 🗓️ Word of the Day
-- Daily German word updates
-- Meaning and English translation
-- Encourages consistent learning habits
-- Quick daily revision
+---
 
-### 🃏 Flashcards
-- Interactive flashcard practice
-- Active recall learning method
-- Quick vocabulary revision
-- Improves long-term retention
+## 📖 About
 
-### 📝 Vocabulary Tests
-- Level-wise vocabulary tests
-- A1, A2, and B1 practice tests
-- Instant score calculation
-- Detailed answer keys after submission
-- Performance feedback and self-assessment
+**Blitz Deutsch** is an interactive German vocabulary learning platform designed for learners preparing for **A1, A2, and B1** German language levels.
 
-### 📱 User Experience
-- Fully responsive design
-- Mobile and desktop friendly
-- Fast and lightweight
-- Clean and intuitive interface
-- Smooth learning experience
+Instead of relying on notebooks, PDFs, dictionaries, or scattered resources, Blitz Deutsch brings everything together in one place. Learners can explore structured vocabulary, search German and English words with translations and example sentences, revise using flashcards, practice with quizzes, and build a consistent daily learning habit.
 
-## 🎯 Purpose
+Whether you're preparing for Goethe German exams or simply improving your German vocabulary, Blitz Deutsch offers a clean, responsive, and easy-to-use learning experience.
 
-Blitz Deutsch was built to help German learners practice and retain vocabulary more effectively. Instead of relying on notebooks, PDFs, or scattered resources, learners can access structured vocabulary, flashcards, daily words, and self-assessment tests in one place.
+---
 
-The project was created as a practical learning tool during my own German language journey and is designed to support students preparing for German language exams and everyday communication.
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| 📖 A1–B1 Vocabulary | Learn German vocabulary organized by A1, A2, and B1 levels |
+| 📚 Chapter-wise Vocabulary | Browse vocabulary chapter by chapter for structured learning |
+| 🔍 German ↔ English Dictionary | Search German or English words with instant translations |
+| 💬 Example Sentences | Understand vocabulary with practical example sentences |
+| 🗓️ Word of the Day | Learn one new German word every day |
+| 🃏 Interactive Flashcards | Practice vocabulary using active recall |
+| 📝 Vocabulary Tests | Practice with **level-wise (A1–B1)** and **chapter-wise** quizzes |
+| ✅ Instant Score Updates | View your score immediately after submitting a quiz |
+| 📋 Answer Keys | Review the correct answers after every test |
+| 📱 Responsive Design | Optimized for desktop, tablet, and mobile devices |
+
+---
+
+## 🎯 Learning Benefits
+
+- Build German vocabulary systematically
+- Learn words from A1 to B1 levels
+- Search German and English words instantly
+- Understand vocabulary through example sentences
+- Improve retention using flashcards
+- Practice with chapter-wise and level-wise quizzes
+- Check your score instantly after every test
+- Review answer keys to strengthen learning
+- Develop a consistent daily learning habit
+- Prepare effectively for German language exams
+
+---
+
+## 📚 Learning Levels
+
+| Level | Description |
+|------|-------------|
+| 🟢 A1 | Beginner German Vocabulary |
+| 🔵 A2 | Elementary German Vocabulary |
+| 🟠 B1 | Intermediate German Vocabulary |
+
+---
 
 ## 🛠️ Tech Stack
 
 - HTML5
 - CSS3
-- JavaScript (Vanilla JS)
-- Git & GitHub
+- Vanilla JavaScript (ES6)
+- JSON
+- Git
+- GitHub
 - Vercel
+
+---
 
 ## 📂 Project Structure
 
 ```text
 blitz-deutsch/
 │
-├── index.html
 ├── assets/
+│   ├── css/
+│   │   └── styles.css
+│   │
+│   └── js/
+│       ├── app.js
+│       ├── data.js
+│       ├── dictionary.js
+│       ├── flashcards.js
+│       ├── storage.js
+│       ├── test.js
+│       └── ui.js
+│
 ├── data/
+│   ├── vocab.js
+│   └── vocab.json
+│
+├── index.html
+├── LICENSE
 ├── README.md
 └── server.ps1
 ```
 
-## 🎓 Learning Levels
+---
 
-| Level | Description |
-|---------|-------------|
-| A1 | Beginner German Vocabulary |
-| A2 | Elementary German Vocabulary |
-| B1 | Intermediate German Vocabulary |
+## 🚀 Getting Started
 
-## 🌟 Key Learning Benefits
-
-- Build German vocabulary systematically
-- Strengthen word retention through flashcards
-- Practice vocabulary with quizzes and tests
-- Track understanding through scores and answer keys
-- Develop a daily learning habit with Word of the Day
-- Prepare for German language exams from A1 to B1
-
-## 💻 Installation
-
-Clone the repository:
+### Clone the repository
 
 ```bash
 git clone https://github.com/gadhwal-10/blitz-deutsch.git
 ```
 
-Navigate to the project directory:
+### Navigate to the project
 
 ```bash
 cd blitz-deutsch
 ```
 
-Open `index.html` in your browser.
+### Run the project
+
+Simply open **index.html** in your preferred web browser.
+
+Or use the **Live Server** extension in Visual Studio Code for development.
+
+---
 
 ## 🌱 Future Enhancements
 
-- Audio pronunciation support
-- Vocabulary progress tracking
-- Daily learning streaks
-- Grammar practice modules
-- Advanced vocabulary packs
-- Personalized learning dashboard
-- User accounts and cloud sync
+- 🔊 Audio pronunciation
+- 🔥 Daily learning streaks
+- 📈 Vocabulary progress tracking
+- 👤 User authentication
+- ☁️ Cloud synchronization
+- 📝 Grammar practice modules
+- 🎯 Personalized learning dashboard
+- 🌙 Dark mode
+- 📱 Progressive Web App (PWA)
+- ❤️ Favorite Words
+- 🤖 AI-powered vocabulary practice
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository.
+
+2. Create a feature branch.
+
+```bash
+git checkout -b feature-name
+```
+
+3. Commit your changes.
+
+```bash
+git commit -m "Add new feature"
+```
+
+4. Push the branch.
+
+```bash
+git push origin feature-name
+```
+
+5. Open a Pull Request.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+See the **LICENSE** file for more information.
+
+---
 
 ## 👨‍💻 Author
 
 **Aryan Gadhwal**
 
 - GitHub: https://github.com/gadhwal-10
-- Live Website: https://blitz-deutsch.vercel.app
+- Live Demo: https://blitz-deutsch.vercel.app
 
 ---
 
-⭐ If you find this project helpful, consider giving it a star on GitHub.
+## ⭐ Support
 
-Made with ❤️ for German language learners.
+If you found **Blitz Deutsch** helpful, consider giving the repository a ⭐ on GitHub.
+
+Your support motivates future improvements and helps others discover the project.
+
+---
+
+<p align="center">
+Made with ❤️ for German Language Learners
+</p>
