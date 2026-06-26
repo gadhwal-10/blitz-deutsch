@@ -135,21 +135,6 @@ Or use the **Live Server** extension in Visual Studio Code for development.
 
 ---
 
-## 🌱 Future Enhancements
-
-- 🔊 Audio pronunciation
-- 🔥 Daily learning streaks
-- 📈 Vocabulary progress tracking
-- 👤 User authentication
-- ☁️ Cloud synchronization
-- 📝 Grammar practice modules
-- 🎯 Personalized learning dashboard
-- 🌙 Dark mode
-- 📱 Progressive Web App (PWA)
-- ❤️ Favorite Words
-- 🤖 AI-powered vocabulary practice
-
----
 
 ## 🤝 Contributing
 
