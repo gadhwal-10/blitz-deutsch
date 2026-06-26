@@ -4,6 +4,8 @@ const Test = {
     currentIndex: 0,
     score: 0,
     maxQuestions: 25,
+    level: '',
+    chapter: '',
     
     levenshtein: (a, b) => {
         if(a.length === 0) return b.length;
@@ -28,6 +30,16 @@ const Test = {
         levelSelect.innerHTML = '';
         Data.levels.forEach(l => {
             levelSelect.innerHTML += `<option value="${l}">${l}</option>`;
+        });
+        
+        levelSelect.addEventListener('change', (e) => {
+            const level = e.target.value;
+            const chapterSelect = document.getElementById('test-chapter-select');
+            chapterSelect.innerHTML = '<option value="">All Chapters</option>';
+            const chapters = Data.getChaptersByLevel(level);
+            chapters.forEach(c => {
+                chapterSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+            });
         });
         
         document.getElementById('start-test-btn').addEventListener('click', Test.start);
@@ -66,12 +78,19 @@ const Test = {
         const dlBtn = document.getElementById('test-download-btn');
         if (dlBtn) dlBtn.addEventListener('click', Test.downloadAnswerKey);
         
+        if (Data.levels.length > 0) {
+            levelSelect.value = Data.levels[0];
+            levelSelect.dispatchEvent(new Event('change'));
+        }
+        
         const session = Storage.getSessionState('test');
         if (session && session.currentIndex < session.words.length) {
             Test.words = session.words;
             Test.currentIndex = session.currentIndex;
             Test.score = session.score;
             Test.history = session.history || [];
+            Test.level = session.level || '';
+            Test.chapter = session.chapter || '';
             
             document.getElementById('test-setup').classList.add('hidden');
             document.getElementById('test-container').classList.remove('hidden');
@@ -85,18 +104,27 @@ const Test = {
             words: Test.words,
             currentIndex: Test.currentIndex,
             score: Test.score,
-            history: Test.history
+            history: Test.history,
+            level: Test.level,
+            chapter: Test.chapter
         });
     },
 
     start: () => {
         const level = document.getElementById('test-level-select').value;
-        const allWords = Data.getWords(level, null);
+        const chapter = document.getElementById('test-chapter-select').value;
+        const chapterEl = document.getElementById('test-chapter-select');
+        Test.level = level;
+        Test.chapter = chapterEl && chapterEl.value ? chapterEl.options[chapterEl.selectedIndex].text : 'All Chapters';
+        
+        const allWords = Data.getWords(level, chapter);
         
         if (allWords.length === 0) {
-            alert('No vocabulary found for level.');
+            alert('No vocabulary found for selection.');
             return;
         }
+        
+        window.location.hash = 'test-practice';
         
         // Filter out recently tested words
         const recentWords = Storage.getRecentTestWords();
@@ -287,6 +315,9 @@ const Test = {
     
     downloadAnswerKey: () => {
         let text = "Blitz Deutsch - Test Answer Key\n";
+        if (Test.level) {
+            text += `Level: ${Test.level} (${Test.chapter || 'All Chapters'})\n`;
+        }
         text += `Score: ${Test.score} / ${Test.words.length}\n`;
         text += "----------------------------------------\n\n";
         
