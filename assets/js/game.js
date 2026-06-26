@@ -25,6 +25,9 @@ const Game = {
         const skipBtn = document.getElementById('game-skip-btn');
         if (skipBtn) skipBtn.addEventListener('click', Game.skipWord);
 
+        const quitBtn = document.getElementById('game-quit-btn');
+        if (quitBtn) quitBtn.addEventListener('click', Game.quitSession);
+
         const playAgainBtn = document.getElementById('game-play-again-btn');
         if (playAgainBtn) playAgainBtn.addEventListener('click', () => {
             document.getElementById('game-result-area').classList.add('hidden');
@@ -48,7 +51,7 @@ const Game = {
         const chapterSelect = document.getElementById('game-chapter-select');
         if (!levelSelect || !chapterSelect || !window.Data || !Data.vocab) return;
 
-        levelSelect.innerHTML = '<option value="ALL">Full A1-C1 Curriculum</option>';
+        levelSelect.innerHTML = '<option value="ALL">Full A1-B1 Curriculum</option>';
         Data.vocab.forEach(lvl => {
             const opt = document.createElement('option');
             opt.value = lvl.level;
@@ -342,6 +345,14 @@ const Game = {
         Storage.addWordReviewed(Game.words.length);
         Storage.recordActivity();
         Storage.clearSessionState('game');
+    },
+
+    quitSession: () => {
+        if (confirm('Are you sure you want to quit the game? Your progress will be lost.')) {
+            Storage.clearSessionState('game');
+            document.getElementById('game-play-area').classList.add('hidden');
+            document.getElementById('game-setup-area').classList.remove('hidden');
+        }
     }
 };
 
