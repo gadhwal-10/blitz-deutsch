@@ -868,3 +868,29 @@ canvas#waveform-canvas {
     color: var(--text-color) !important;
     box-shadow: var(--shadow-lg) !important;
 }
+
+/* Dictionary & Translator Styles */
+.search-container {
+    background: rgba(31, 41, 55, 0.8) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.search-container:focus-within {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 16px rgba(255, 183, 3, 0.2);
+}
+
+.dict-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(255, 183, 3, 0.4);
+}
+
+.dict-listen-de:hover, .dict-listen-en:hover, .dict-listen-ex:hover {
+    background-color: var(--accent-color) !important;
+    color: #000 !important;
+    border-color: var(--accent-color) !important;
+}
